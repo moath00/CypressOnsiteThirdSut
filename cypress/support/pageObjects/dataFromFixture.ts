@@ -1,69 +1,64 @@
 class FixtureDataGetter {
 
     elements = {
-        correctData: (): Array<string> => {
-            let correctUser: string;
-            let correctPass: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["correctUsername"];
-                correctPass = data["correctPassword"];
+        correctData: () => {
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( (data:any) => {
+                inputs = [data.correctUsername, data.correctPassword];
             });
-
-            return [correctUser, correctPass];
+            return inputs;
         },
         incorrectPassword: () => {
-            let correctUser: string;
-            let correctPass: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["correctUsername"];
-                correctPass = data["wrongPassword"];
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( (data:any) => {
+                inputs = [data["correctUsername"], data["wrongPassword"]];
             });
+            return inputs;
         },
         incorrectUsername: () => {
-            let correctUser: string;
-            let correctPass: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["wrongUsername"];
-                correctPass = data["correctPassword"];
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( (data:any) => {
+                inputs = [data["wrongUsername"], data["correctPassword"]];
             });
+            return inputs;
         },
         incorrectData: () => {
-            let correctUser: string;
-            let correctPass: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["wrongUsername"];
-                correctPass = data["wrongPassword"];
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( (data:any) => {
+                inputs = [data["wrongUsername"], data["wrongPassword"]];
+                
             });
+            return inputs;
         },
         onlyUsername: () => {
-            let correctUser: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["correctUsername"];
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( (data:any) => {
+                inputs = [data["correctUsername"], ""];
             });
+            return inputs;
         },
         onlyPassword: () => {
-            let correctUser: string;
-            let correctPass: string;
-            cy.fixture('loginData').as('correctData');
-            cy.get('@correctData').then((data) => {
-                correctUser = data["correctUsername"];
-                correctPass = data["correctPassword"];
+            let inputs;
+            cy.fixture('loginData.json').as('data');
+            cy.get('@data').then( function(data:any) {
+                inputs = ["", data["correctPassword"]];
             });
+            return inputs;
         },
         empty: () => { ["", ""] }
     }
 
     getter() {
         return [
-            this.elements.correctData(),
-            this.elements.incorrectUsername(),
-            this.elements.incorrectPassword(),
             this.elements.incorrectData(),
+            this.elements.incorrectPassword(),
+            this.elements.incorrectUsername(),
+            this.elements.correctData(),
             this.elements.onlyUsername(),
             this.elements.onlyPassword(),
             this.elements.empty()

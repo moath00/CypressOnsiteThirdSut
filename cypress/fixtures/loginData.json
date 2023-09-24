@@ -2,5 +2,7 @@
     "correctUsername": "Admin",
     "correctPassword": "admin123",
     "wrongUsername": "test",
-    "wrongPassword": "test123"
+    "wrongPassword": "test123",
+    "emptyUsername": "",
+    "emptyPassword": ""
 }
